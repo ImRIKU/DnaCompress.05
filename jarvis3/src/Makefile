@@ -10,17 +10,17 @@ CFLAGS = -Wall -Ofast $(CPLP) -DPROGRESS
 #CFLAGS = -Wall -Ofast $(CPLP) -DPROGRESS
 #CFLAGS = -Wall -Ofast -march=native -mtune=native -DPROGRESS
 #-----------------------------------------------------------------------------
-LIBS   = -lm
+LIBS   = -lm -pthread
 DEPS   = defs.h
 PROGS  = $(BIN)/JARVIS3
 OBJS   = bitio.o arith.o arith_aux.o levels.o common.o msg.o mem.o dna.o \
          files.o strings.o args.o nn.o mix.o repeats.o pmodels.o buffer.o \
-	 cm_tolerant.o cm_array.o cm_hash.o cm.o
+	 cm_tolerant.o cm_array.o cm_hash.o cm.o cpuUsage.o
 #-----------------------------------------------------------------------------
 all:
 	$(MAKE) progs
 progs: $(PROGS)
-$(BIN)/JARVIS3: Jarvis3.c $(DEPS) $(OBJS)
+$(BIN)/JARVIS3: Jarvis3.c cpuUsage.c $(DEPS) $(OBJS)
 	$(CC) $(CFLAGS) -o $(BIN)/JARVIS3 Jarvis3.c $(OBJS) $(LIBS)
 bitio.o: bitio.c bitio.h
 	$(CC) -c $(CFLAGS) bitio.c
